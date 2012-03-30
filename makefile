@@ -1,4 +1,4 @@
-all: bin/g++.exe
+all: bin/cpp.exe bin/g++.exe
 
 clean:
 	 find \( -name '*.o' -o -name '*.exe' -o -name '*.a' \)  -exec rm {} \;
@@ -57,7 +57,7 @@ o/gcc/libcommon-target.a:        o/gcc/i386-common.o                \
                                  o/gcc/options.o                    \
                                  o/gcc/vec.o                        \
                                  o/gcc/hooks.o                      \
-                                 o/gcc/common-targhooks.o 
+                                 o/gcc/common-targhooks.o
 	rm -f  $@
 	ar cru $@ $^
 	ranlib $@
@@ -102,12 +102,12 @@ o/gcc/libcommon.a:               o/gcc/diagnostic.o                 \
 
   #  c -> o {
 
-LIBCPP_FLAGS=-D__USE_MINGW_ACCESS -Ilibcpp -I$(SRCROOT)/include -I$(SRCROOT)/libcpp -I$(SRCROOT)/libcpp/include  -Igcc 
+LIBCPP_FLAGS=-D__USE_MINGW_ACCESS -Ilibcpp -I$(SRCROOT)/include -I$(SRCROOT)/libcpp -I$(SRCROOT)/libcpp/include  -Igcc
 
 o/libcpp/charset.o:                  $(SRCROOT)/libcpp/charset.c
 	gcc  $(LIBCPP_FLAGS) -c $^ -o $@
 
-o/libcpp/directives.o::               $(SRCROOT)/libcpp/directives.c              
+o/libcpp/directives.o::               $(SRCROOT)/libcpp/directives.c
 	gcc  $(LIBCPP_FLAGS) -c $^ -o $@
 
 o/libcpp/directives-only.o:          $(SRCROOT)/libcpp/directives-only.c
@@ -542,7 +542,7 @@ o/libdecnumber/libdecnumber.a:   o/libdecnumber/decNumber.o         \
                                  o/libdecnumber/bid2dpd_dpd2bid.o   \
                                  o/libdecnumber/host-ieee32.o       \
                                  o/libdecnumber/host-ieee64.o       \
-                                 o/libdecnumber/host-ieee128.o     
+                                 o/libdecnumber/host-ieee128.o
 	rm -f  $@
 	ar cru $@ $^
 	ranlib $@
@@ -552,19 +552,29 @@ o/libdecnumber/libdecnumber.a:   o/libdecnumber/decNumber.o         \
 o/gcc/gcc.o:                         $(SRCROOT)/gcc/gcc.c
 	gcc -DIN_GCC -DHAVE_CONFIG_H -D__USE_MINGW_ACCESS $(SOME_DEFINES) -Igcc -I$(SRCROOT)/gcc -I$(SRCROOT)/include -I$(SRCROOT)/libcpp/include  -c $^ -o $@
 
-
 o/gcc/ggc-none.o:                    $(SRCROOT)/gcc/ggc-none.c
 	gcc -DIN_GCC -DHAVE_CONFIG_H -D__USE_MINGW_ACCESS -Igcc -I$(SRCROOT)/gcc -I$(SRCROOT)/include -c $^ -o $@
 
+o/gcc/cppspec.o:                     $(SRCROOT)/gcc/cppspec.c
+	gcc -D__USE_MINGW_ACCESS -DIN_GCC -DHAVE_CONFIG_H -Igcc -I$(SRCROOT)/gcc -I$(SRCROOT)/include -I$(SRCROOT)/libcpp/include -c $^ -o $@
 
 o/gcc/cp/g++spec.o:                  $(SRCROOT)/gcc/cp/g++spec.c
 	gcc -DIN_GCC -DHAVE_CONFIG_H  -Igcc -I$(SRCROOT)/gcc -I$(SRCROOT)/include -I$(SRCROOT)/gcc/cp -I$(SRCROOT)/gcc -I$(SRCROOT)/libcpp/include -c $^ -o $@
-
 
 o/gcc/driver-i386.o:                 $(SRCROOT)/gcc/config/i386/driver-i386.c
 	gcc -DIN_GCC -DHAVE_CONFIG_H -D__USE_MINGW_ACCESS -Igcc -I$(SRCROOT)/gcc -I$(SRCROOT)/include -c $^ -o $@
 
 
+GOES_WITH_SPEC=o/gcc/gcc.o o/gcc/ggc-none.o      \
+               o/gcc/driver-i386.o               \
+							 o/gcc/libcommon-target.a          \
+							 o/gcc/libcommon.a                 \
+							 o/libcpp/libcpp.a                 \
+							 o/libiberty/libiberty.a           \
+							 o/libdecnumber/libdecnumber.a
 
-bin/g++.exe: o/gcc/gcc.o o/gcc/ggc-none.o o/gcc/cp/g++spec.o o/gcc/driver-i386.o o/gcc/libcommon-target.a o/gcc/libcommon.a o/libcpp/libcpp.a o/libiberty/libiberty.a o/libdecnumber/libdecnumber.a
-	g++        $^ -o $@  -lintl -liconv 
+bin/cpp.exe: $(GOES_WITH_SPEC) o/gcc/cppspec.o
+	g++        $^ -o $@  -lintl -liconv
+
+bin/g++.exe: $(GOES_WITH_SPEC) o/gcc/cp/g++spec.o
+	g++        $^ -o $@  -lintl -liconv
