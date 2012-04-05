@@ -55,7 +55,7 @@ o/gcc/hooks.o:                       $(SRCROOT)/gcc/hooks.c
 o/gcc/common-targhooks.o:            $(SRCROOT)/gcc/common/common-targhooks.c
 	gcc $(FCOMMON_TARGET) -c $^ -o $@
 
-	# }
+  # }
 
 o/gcc/libcommon-target.a: o/gcc/i386-common.o                \
                           o/gcc/prefix.o                     \
@@ -93,7 +93,7 @@ o/gcc/input.o:                       $(SRCROOT)/gcc/input.c
 o/gcc/version.o:                     $(SRCROOT)/gcc/version.c
 	gcc $(F_COMMON) $(DBASEVER) -DBUGURL="\"<http://gcc.gnu.org/bugs.html>\"" -DPKGVERSION="\"(GCC) \"" -DDATESTAMP="\"\"" -DDEVPHASE="\"\"" -DREVISION="\"\""     -c $^ -o $@
 
-	# }
+  # }
 
 o/gcc/libcommon.a:               o/gcc/diagnostic.o                 \
                                  o/gcc/pretty-print.o               \
@@ -157,7 +157,7 @@ o/libcpp/symtab.o:                   $(SRCROOT)/libcpp/symtab.c
 o/libcpp/traditional.o:              $(SRCROOT)/libcpp/traditional.c
 	gcc  $(F_CPP) -c $^ -o $@
 
-	# }
+  # }
 
   #  o -> a {
 
@@ -426,7 +426,7 @@ o/libiberty/xstrndup.o:              $(SRCROOT)/libiberty/xstrndup.c
 
   # }
 
-	#  o -> a {
+  #  o -> a {
 
 o/libiberty/libiberty.a: o/libiberty/alloca.o               \
                          o/libiberty/argv.o                 \
@@ -510,7 +510,7 @@ o/libiberty/libiberty.a: o/libiberty/alloca.o               \
 	ar cru $@ $^
 	ranlib $@
 
-	# }
+  # }
 
 # }
 
@@ -547,7 +547,7 @@ o/libdecnumber/host-ieee64.o:     $(SRCROOT)/libdecnumber/bid/host-ieee64.c
 o/libdecnumber/host-ieee128.o:    $(SRCROOT)/libdecnumber/bid/host-ieee128.c
 	gcc  $(F_DECNUMBER) -c $^ -o $@
 
-	# }
+  # }
 
   #  o -> a {
 
@@ -570,7 +570,7 @@ o/libdecnumber/libdecnumber.a:   o/libdecnumber/decNumber.o         \
 
 # libbackend                {
 
-	# c -> o  {
+  # c -> o  {
 
     # insn-*.c {
 
@@ -609,7 +609,7 @@ o/gcc/insn-recog.o:                  gcc/insn-recog.c
 o/gcc/insn-enums.o:                  gcc/insn-enums.c
 	gcc $(F_INSN) -c $^ -o $@
 
-	  # }
+    # }
 
     # others {
 
@@ -2160,9 +2160,9 @@ o/mpc/ui_ui_sub.o:                   $(SRCROOT)/mpc/src/ui_ui_sub.c
 	gcc $(F_MPC) -c $^ -o $@
 
 
-	# }
+  # }
 
-	#  o -> a {
+  #  o -> a {
 
 o/mpc/libmpc.a: o/mpc/abs.o           \
                 o/mpc/acos.o          \
@@ -3236,7 +3236,7 @@ o/gmp/nextprime.o:                   $(SRCROOT)/gmp/nextprime.c
 o/gmp/tal-reent.o:                   $(SRCROOT)/gmp/tal-reent.c
 	gcc $(F_GMP) -c $^ -o $@
 
-	# }
+  # }
 
   # mpf    {
 
@@ -5009,7 +5009,7 @@ o/gmp/libgmp.a: o/gmp/assert.o                     \
 	ranlib $@
 
 
-	# }
+  # }
 
 # }
 
