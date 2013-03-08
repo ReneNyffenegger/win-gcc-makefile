@@ -1,1 +1,3 @@
 *.out
+libiconv-2.dll
+libintl-8.dll

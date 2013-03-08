@@ -1,2 +1,2 @@
 preprocessor.c.out: preprocessor-gcc.c
-	../bin/cpp.exe -e $^ 1> $@
+	../bin/cpp.exe -E $^ 1> $@
